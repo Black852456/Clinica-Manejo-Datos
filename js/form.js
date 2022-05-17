@@ -19,11 +19,11 @@ botonAdicionar.addEventListener("click", function(event) {
     imcTd = document.createElement("td");
 
     //Asignar valores a la propiedad textContent
-    nombreTd.textContent = nombre;
-    alturaTd.textContent = altura;
-    pesoTd.textContent = peso;
-    gorduraTd.textContent = gordura;
-    imcTd.textContent = calcularIMC(peso, altura);
+    nombreTd.textContent = paciente.nombre;
+    alturaTd.textContent = paciente.altura;
+    pesoTd.textContent = paciente.peso;
+    gorduraTd.textContent = paciente.gordura;
+    imcTd.textContent = paciente.imc;
 
     //Asignacion de los tds al tr de la fila
     pacienteTr.appendChild(nombreTd);
@@ -38,10 +38,14 @@ botonAdicionar.addEventListener("click", function(event) {
 });
 
 function capturarDatosPaciente(form) {
-    var nombre = form.nombre.value;
-    var peso = form.peso.value;
-    var altura = form.altura.value;
-    var gordura = form.gordura.value
 
-    return
+    var paciente = {
+        nombre: form.nombre.value,
+        peso: form.peso.value,
+        altura: form.altura.value,
+        gordura: form.gordura.value,
+        imc: calcularIMC(form.peso.value, form.altura.value)
+    }
+
+    return paciente;
 }
