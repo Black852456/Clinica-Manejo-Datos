@@ -4,38 +4,46 @@ botonAdicionar.addEventListener("click", function(event) {
     event.preventDefault();
 
     var form = document.querySelector("#form-adicionar");
-
     var paciente = capturarDatosPaciente(form);
-
-
+    var pacienteTr = construirTr(paciente);
+    if (!validarPaciente(paciente)) {
+        console.log("Paciente erroneo");
+        return;
+    }
     var tabla = document.querySelector("#tabla-pacientes");
-
-    //crear los tds de un tr
-    pacienteTr = document.createElement("tr");
-    nombreTd = document.createElement("td");
-    alturaTd = document.createElement("td");
-    pesoTd = document.createElement("td");
-    gorduraTd = document.createElement("td");
-    imcTd = document.createElement("td");
-
-    //Asignar valores a la propiedad textContent
-    nombreTd.textContent = paciente.nombre;
-    alturaTd.textContent = paciente.altura;
-    pesoTd.textContent = paciente.peso;
-    gorduraTd.textContent = paciente.gordura;
-    imcTd.textContent = paciente.imc;
-
-    //Asignacion de los tds al tr de la fila
-    pacienteTr.appendChild(nombreTd);
-    pacienteTr.appendChild(pesoTd);
-    pacienteTr.appendChild(alturaTd);
-    pacienteTr.appendChild(gorduraTd);
-    pacienteTr.appendChild(imcTd);
-
-    //Asignacion del objeto Tr(FILA) a la tabla
     tabla.appendChild(pacienteTr);
-
+    form.reset();
 });
+
+
+function construirTr(paciente) {
+    //crear los tds de un tr
+    var pacienteTr = document.createElement("tr");
+    pacienteTr.classList.add("paciente");
+
+    pacienteTr.appendChild(construirTd(paciente.nombre, "info-nombre"));
+    pacienteTr.appendChild(construirTd(paciente.peso, "info-peso"));
+    pacienteTr.appendChild(construirTd(paciente.altura, "info-altura"));
+    pacienteTr.appendChild(construirTd(paciente.gordura, "info-gordura"));
+    pacienteTr.appendChild(construirTd(paciente.imc, "info-imc"));
+
+    return pacienteTr;
+}
+
+function construirTd(dato, clase) {
+    var td = document.createElement("td");
+    td.classList.add(clase);
+    td.textContent = dato;
+    return td;
+}
+
+function validarPaciente(paciente) {
+    if (validarPeso(paciente.peso)) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 function capturarDatosPaciente(form) {
 
